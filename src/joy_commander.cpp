@@ -43,7 +43,6 @@ JoyCommander::JoyCommander(ros::NodeHandle nh) :
 
 void JoyCommander::joy_callback(const sensor_msgs::Joy & msg) {
 
-  std::cout << "FOO!" << std::endl;
   geometry_msgs::Twist joy_command;
 
   if (m_control_xy) {
@@ -67,19 +66,16 @@ void JoyCommander::joy_callback(const sensor_msgs::Joy & msg) {
 
 
 void JoyCommander::update_button_state(std::vector<int> buttons) {
-
   for(int i = 0; i < m_button_count; i++) {
 
     if( buttons[i] != m_button_state[i]) {
       joy_commander::button_srv service;
-      service.request.button_state = !(buttons[i] == 0);
-
+      service.request.button_state = buttons[i] > 0;
       std::vector<ros::ServiceClient> * client = & m_service_clients[i];
 
-      std::vector<ros::ServiceClient>::iterator it = client->end();
+      std::vector<ros::ServiceClient>::iterator it = client->begin();
 
       for(;it != client->end(); it++) {
-        joy_commander::button_srv service;
         (*it).call(service);
       }
 
@@ -117,6 +113,7 @@ bool JoyCommander::add_button_srv_cb(joy_commander::add_button_srv::Request & re
 {
   m_service_clients[request.button].push_back(m_nh.serviceClient<joy_commander::button_srv>(request.service_name));
   response.str = "ok";
+  return true;
 }
 
 int main(int argc, char * argv []) {

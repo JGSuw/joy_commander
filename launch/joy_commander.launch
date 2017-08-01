@@ -5,5 +5,5 @@
     <param name="dev" value="$(arg joy_dev)" />
   </node>
 
-  <node name="joy_commander" pkg="joy_commander" type="joy_commander"/>
+  <node name="joy_commander" pkg="joy_commander" type="joy_commander" output="screen"/>
 </launch>
