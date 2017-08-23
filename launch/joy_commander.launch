@@ -1,9 +1,10 @@
 <launch>
   <arg name="joy_dev" default="/dev/input/js0"/>
-
+  <arg name="config" default="$(find joy_commander)/config/default.yaml"/>
   <node name="joy" pkg="joy" type="joy_node" output="screen" >
     <param name="dev" value="$(arg joy_dev)" />
   </node>
-
-  <node name="joy_commander" pkg="joy_commander" type="joy_commander" output="screen"/>
+  <node name="joy_commander" pkg="joy_commander" type="joy_commander" output="screen">
+    <rosparam file="$(arg config)" command="load"/>
+  </node>
 </launch>

@@ -23,13 +23,13 @@ JoyCommander::JoyCommander(ros::NodeHandle nh) :
 
     // init subscription
     std::string joy_sub_name;
-    m_nh.param<std::string>("joy_sub_name", joy_sub_name, "joy");
+    ros::param::get("joy_sub_name", joy_sub_name);
     m_joy_sub = m_nh.subscribe(joy_sub_name, MSG_QUEUE_SIZE, &JoyCommander::joy_callback, this);
 
 
     // init Publisher
     std::string twist_pub_name;
-    m_nh.param<std::string>("twist_pub_name", twist_pub_name, "joy_twist");
+    ros::param::get("twist_pub_name", twist_pub_name);
     m_twist_pub = m_nh.advertise<geometry_msgs::Twist>(twist_pub_name, MSG_QUEUE_SIZE);
 
     // get params
@@ -86,25 +86,25 @@ void JoyCommander::update_button_state(std::vector<int> buttons) {
 
 
 void JoyCommander::update_parameters() {
-  m_nh.param<int>("z_axis", m_z_axis, 1);
-  m_nh.param<int>("z_sign", m_z_sign, 1);
-  m_nh.param<int>("yaw_axis", m_yaw_axis, 0);
-  m_nh.param<int>("yaw_sign", m_yaw_sign, 1);
-  m_nh.param<int>("roll_axis", m_roll_axis, 2);
-  m_nh.param<int>("roll_sign", m_roll_sign, -1);
-  m_nh.param<int>("pitch_axis", m_pitch_axis, 3);
-  m_nh.param<int>("pitch_sign", m_pitch_sign, 1);
-  m_nh.param<double>("z_max", m_z_max, 0.5);
-  m_nh.param<double>("yaw_max", m_yaw_max, 180.);
-  m_nh.param<double>("roll_max", m_roll_max, 15.);
-  m_nh.param<double>("pitch_max", m_pitch_max, 15.);
-  m_nh.param<int>("control_xy", m_control_xy, 0);
-  m_nh.param<int>("x_axis", m_x_axis, 3);
-  m_nh.param<int>("x_sign", m_x_sign, 1);
-  m_nh.param<int>("y_axis", m_y_axis, 2);
-  m_nh.param<int>("y_sign", m_y_sign, 1);
-  m_nh.param<double>("linear_x_max", m_linear_x_max, 1.);
-  m_nh.param<double>("linear_y_max", m_linear_y_max, 1.);
+  ros::param::get("z_axis", m_z_axis);
+  ros::param::get("z_sign", m_z_sign);
+  ros::param::get("yaw_axis", m_yaw_axis);
+  ros::param::get("yaw_sign", m_yaw_sign);
+  ros::param::get("roll_axis", m_roll_axis);
+  ros::param::get("roll_sign", m_roll_sign);
+  ros::param::get("pitch_axis", m_pitch_axis);
+  ros::param::get("pitch_sign", m_pitch_sign);
+  ros::param::get("z_max", m_z_max);
+  ros::param::get("yaw_max", m_yaw_max);
+  ros::param::get("roll_max", m_roll_max);
+  ros::param::get("pitch_max", m_pitch_max);
+  ros::param::get("control_xy", m_control_xy);
+  ros::param::get("x_axis", m_x_axis);
+  ros::param::get("x_sign", m_x_sign);
+  ros::param::get("y_axis", m_y_axis);
+  ros::param::get("y_sign", m_y_sign);
+  ros::param::get("linear_x_max", m_linear_x_max);
+  ros::param::get("linear_y_max", m_linear_y_max);
 }
 
 
